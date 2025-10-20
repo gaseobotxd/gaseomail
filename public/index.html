@@ -1,0 +1,2624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASEO MAIL • Sistema Completo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #1e293b;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Login */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 440px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.login-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.login-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    margin-top: 15px;
+    color: #6366f1;
+}
+
+.error-message {
+    background: #fef2f2;
+    color: #ef4444;
+    padding: 10px 12px;
+    border-radius: 12px;
+    margin-top: 15px;
+    display: none;
+    border-left: 4px solid #ef4444;
+}
+
+/* App */
+.app-container {
+    display: none;
+    height: 100vh;
+    background: #f8fafc;
+}
+
+.header {
+    background: white;
+    padding: 0 15px;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-stats {
+    display: none;
+    gap: 15px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.logout-btn {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    padding: 8px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.logout-btn:hover {
+    background: #e0e7ff;
+    border-color: #6366f1;
+    color: #6366f1;
+}
+
+/* Layout */
+.main-layout {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 250px;
+    background: white;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+}
+
+.compose-btn {
+    margin: 0 15px 15px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.compose-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.folder-list {
+    list-style: none;
+    flex: 1;
+}
+
+.folder-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 8px;
+    border-radius: 10px;
+}
+
+.folder-item:hover {
+    background: #e0e7ff;
+}
+
+.folder-item.active {
+    background: #e0e7ff;
+    color: #6366f1;
+    font-weight: 600;
+}
+
+.folder-count {
+    margin-left: auto;
+    background: #6366f1;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Content */
+.content-area {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow: hidden;
+}
+
+.email-toolbar {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.toolbar-btn {
+    padding: 8px 14px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.toolbar-btn:hover {
+    background: #e0e7ff;
+    border-color: #6366f1;
+    color: #6366f1;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 12px;
+    background: #f8fafc;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+}
+
+/* Email List */
+.email-list {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.email-list-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.email-list-body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.email-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.email-item:hover {
+    background: #e0e7ff;
+}
+
+.email-item.unread {
+    background: #f0f7ff;
+    font-weight: 600;
+}
+
+.email-star {
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.email-star:hover {
+    color: #f59e0b;
+}
+
+.email-star.starred {
+    color: #f59e0b;
+}
+
+.email-sender {
+    width: 150px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.email-subject {
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.email-preview {
+    color: #64748b;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email-attachment {
+    color: #6366f1;
+    margin-left: 6px;
+}
+
+.email-date {
+    width: 100px;
+    text-align: right;
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* Email View */
+.email-view {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 15px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.email-view-header {
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.email-view-subject {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.email-view-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #64748b;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.email-view-from {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.email-view {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 15px;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto; /* Rolagem no contêiner pai */
+}
+.email-view-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Compose */
+.compose-modal {
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    width: 90%;
+    max-height: 80vh;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.compose-header {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.compose-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.compose-actions button {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px;
+    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.compose-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+.compose-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.compose-field label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.compose-field input,
+.compose-field textarea {
+    padding: 10px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.compose-field input:focus,
+.compose-field textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.compose-field textarea {
+    min-height: 150px;
+    resize: vertical;
+    line-height: 1.4;
+}
+
+.file-upload {
+    border: 2px dashed #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-upload:hover {
+    border-color: #6366f1;
+    background: #e0e7ff;
+}
+
+.attachments-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.attachment-item {
+    background: #e0e7ff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6366f1;
+}
+
+.attachment-item .fa-times {
+    cursor: pointer;
+    color: #ef4444;
+}
+
+.compose-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.send-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.send-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.send-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Empty State */
+.empty-state {
+    padding: 40px 15px;
+    text-align: center;
+    color: #64748b;
+}
+
+.empty-state i {
+    font-size: 36px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 500;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    animation: slideInRight 0.3s ease;
+}
+
+.notification.success {
+    background: #10b981;
+}
+
+.notification.error {
+    background: #ef4444;
+}
+
+.notification.warning {
+    background: #f59e0b;
+}
+
+.notification.info {
+    background: #3b82f6;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Attachments Section */
+.email-attachments-section {
+    margin: 15px 0;
+    padding: 15px;
+    background: #f0f9ff;
+    border-radius: 10px;
+    border-left: 4px solid #3b82f6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.email-attachments-section h4 {
+    margin-bottom: 10px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.email-attachments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.email-attachment-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #bfdbfe;
+    transition: all 0.3s ease;
+}
+
+.email-attachment-item:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    transform: translateY(-2px);
+}
+
+.email-attachment-icon {
+    color: #3b82f6;
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.email-attachment-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.email-attachment-name {
+    font-weight: 600;
+    font-size: 12px;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+}
+
+.email-attachment-size {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.email-attachment-type {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+.email-attachment-download {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.email-attachment-download:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+/* Files Section */
+.files-section {
+    margin: 15px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.files-stats {
+    display: flex;
+    gap: 15px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.files-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.file-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-card:hover {
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+    transform: translateY(-2px);
+}
+
+.file-icon {
+    font-size: 24px;
+    color: #6366f1;
+    margin-bottom: 10px;
+}
+
+.file-name {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-info {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.file-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.file-action-btn {
+    padding: 5px 10px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.file-action-btn:hover {
+    background: #e0e7ff;
+    border-color: #6366f1;
+    color: #6366f1;
+}
+
+.file-action-btn.delete:hover {
+    background: #fef2f2;
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 20px;
+    }
+
+    .header {
+        height: 50px;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .logout-btn {
+        padding: 6px 12px;
+        font-size: 10px;
+    }
+
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .content-area {
+        padding: 10px;
+    }
+
+    .email-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .email-sender {
+        width: 100px;
+    }
+
+    .email-date {
+        width: 80px;
+    }
+
+    .compose-modal {
+        width: 100%;
+        right: 0;
+    }
+
+    .email-view-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .files-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .login-header h1 {
+        font-size: 18px;
+    }
+
+    .form-input {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .login-btn {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .folder-item {
+        padding: 10px 15px;
+    }
+
+    .email-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .email-sender, .email-date {
+        width: 100%;
+        text-align: left;
+    }
+
+    .email-view-subject {
+        font-size: 16px;
+    }
+
+    .email-view-body {
+        font-size: 12px;
+    }
+
+    .compose-field input,
+    .compose-field textarea {
+        font-size: 12px;
+    }
+
+    .send-btn {
+        padding: 8px 16px;
+        font-size: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Login -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h1>GASEO MAIL</h1>
+                <p>Sistema profissional de email</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-input" id="email" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" class="form-input" id="password" placeholder="Digite sua senha" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Lembrar-me</label>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Entrar
+                </button>
+                
+                <div class="loading" id="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Carregando...
+                </div>
+                
+                <div class="error-message" id="errorMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- App -->
+    <div class="app-container" id="appContainer">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-envelope"></i>
+            GASEO MAIL            </div>
+            
+            <div class="user-info">
+                <div class="user-stats" id="userStats">
+                    <div class="stat-item">
+                        <i class="fas fa-inbox"></i>
+                        <span id="inboxCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-paper-plane"></i>
+                        <span id="sentCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-trash"></i>
+                        <span id="trashCount">0</span>
+                    </div>
+                </div>
+                
+                <div class="user-avatar" id="userAvatar">U</div>
+                
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
+                </button>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <button class="compose-btn" id="composeBtn">
+                    <i class="fas fa-pen"></i>
+                    Nova Mensagem
+                </button>
+                
+                <ul class="folder-list">
+                    <li class="folder-item active" data-folder="INBOX">
+                        <i class="fas fa-inbox"></i>
+                        Caixa de Entrada
+                        <span class="folder-count" id="inboxBadge">0</span>
+                    </li>
+                    <li class="folder-item" data-folder="Sent">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviados
+                        <span class="folder-count" id="sentBadge">0</span>
+                    </li>
+                    <li class="folder-item" data-folder="Drafts">
+                        <i class="fas fa-file"></i>
+                        Rascunhos
+                        <span class="folder-count" id="draftsBadge">0</span>
+                    </li>
+                    <li class="folder-item" data-folder="Trash">
+                        <i class="fas fa-trash"></i>
+                        Lixeira
+                        <span class="folder-count" id="trashBadge">0</span>
+                    </li>
+                    <li class="folder-item" data-folder="Starred">
+                        <i class="fas fa-star"></i>
+                        Importantes
+                        <span class="folder-count" id="starredBadge">0</span>
+                    </li>
+                    <li class="folder-item" data-folder="Files" id="filesFolderBtn">
+                        <i class="fas fa-folder"></i>
+                        Meus Arquivos
+                        <span class="folder-count" id="filesBadge">0</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-area">
+                <div class="email-toolbar">
+                    <button class="toolbar-btn" id="refreshBtn">
+                        <i class="fas fa-sync"></i>
+                        Atualizar
+                    </button>
+                    <button class="toolbar-btn" id="backBtn" style="display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Voltar
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar emails..." id="searchInput">
+                    </div>
+                </div>
+
+                <!-- View de Emails -->
+                <div class="email-list" id="emailListView">
+                    <div class="email-list-header">
+                        <h3 id="folderTitle">Caixa de Entrada</h3>
+                        <span id="emailCount">0 emails</span>
+                    </div>
+                    <div class="email-list-body" id="emailListContainer">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3>Nenhum email encontrado</h3>
+                            <p>Não há mensagens nesta pasta</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View de Detalhes do Email -->
+                <div class="email-view" id="emailDetailView">
+                    <div class="email-view-header">
+                        <h2 class="email-view-subject" id="emailDetailSubject">Assunto do Email</h2>
+                        <div class="email-view-info">
+                            <div>
+                                De: <span class="email-view-from" id="emailDetailFrom">Remetente</span>
+                            </div>
+                            <div id="emailDetailDate">Data</div>
+                        </div>
+                    </div>
+                    <div class="email-view-body" id="emailDetailBody">
+                        Conteúdo do email será carregado aqui...
+                    </div>
+                    <div class="email-attachments-section" id="emailAttachmentsSection" style="display: none;">
+                        <h4><i class="fas fa-paperclip"></i> Anexos Recebidos</h4>
+                        <div class="email-attachments-list" id="emailAttachmentsList">
+                            <!-- Anexos serão inseridos aqui -->
+                        </div>
+                    </div>
+                    <div class="email-view-actions">
+                        <button class="toolbar-btn" id="replyBtn">
+                            <i class="fas fa-reply"></i>
+                            Responder
+                        </button>
+                        <button class="toolbar-btn" id="forwardBtn">
+                            <i class="fas fa-share"></i>
+                            Encaminhar
+                        </button>
+                        <button class="toolbar-btn" id="deleteBtn">
+                            <i class="fas fa-trash"></i>
+                            Excluir
+                        </button>
+                        <button class="toolbar-btn" id="starBtn">
+                            <i class="far fa-star"></i>
+                            Marcar como Importante
+                        </button>
+                    </div>
+                </div>
+                <style>
+                    .loading-email {
+    text-align: center;
+    padding: 40px;
+}
+
+.loading-email i {
+    font-size: 32px;
+    color: #6366f1;
+}
+
+.loading-email p {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #1e293b;
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    .loading-email {
+        padding: 20px;
+    }
+
+    .loading-email i {
+        font-size: 24px;
+    }
+
+    .loading-email p {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .loading-email {
+        padding: 15px;
+    }
+
+    .loading-email i {
+        font-size: 20px;
+    }
+
+    .loading-email p {
+        margin-top: 8px;
+        font-size: 10px;
+    }
+}
+                </style>
+
+                <!-- View de Arquivos -->
+                <div class="files-section" id="filesView" style="display: none;">
+                    <div class="files-header">
+                        <div>
+                            <h3><i class="fas fa-folder"></i> Meus Arquivos</h3>
+                            <p class="files-stats">
+                                <span id="totalFiles">0 arquivos</span>
+                                <span id="totalSize">0 MB</span>
+                            </p>
+                        </div>
+                        <button class="toolbar-btn" id="refreshFilesBtn">
+                            <i class="fas fa-sync"></i>
+                            Atualizar
+                        </button>
+                    </div>
+
+                    <div class="files-grid" id="filesGrid">
+                        <div class="empty-state">
+                            <i class="fas fa-folder-open"></i>
+                            <h3>Nenhum arquivo encontrado</h3>
+                            <p>Seus anexos de email aparecerão aqui</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Compose Modal -->
+        <div class="compose-modal" id="composeModal">
+            <div class="compose-header">
+                <h3>Nova Mensagem</h3>
+                <div class="compose-actions">
+                    <button id="minimizeCompose">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button id="closeCompose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="compose-body">
+                <div class="compose-field">
+                    <label>Para:</label>
+                    <input type="email" id="composeTo" placeholder="destinatario@email.com" required>
+                </div>
+                
+                <div class="compose-field">
+                    <label>Assunto:</label>
+                    <input type="text" id="composeSubject" placeholder="Assunto do email" required>
+                </div>
+                
+                <div class="compose-field">
+                    <label>Mensagem:</label>
+                    <textarea id="composeMessage" placeholder="Digite sua mensagem aqui..." required></textarea>
+                </div>
+                
+                <div class="compose-field">
+                    <label>Anexos:</label>
+                    <div class="file-upload" id="fileUpload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <div>Clique para adicionar arquivos (PDF, Imagens, Documentos)</div>
+                        <input type="file" id="fileInput" multiple style="display: none;" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.zip,.rar">
+                    </div>
+                    <div class="attachments-list" id="attachmentsList"></div>
+                </div>
+            </div>
+            <style>
+                .error-loading-email {
+    text-align: center;
+    padding: 40px;
+    color: #ef4444;
+}
+
+.error-loading-email i {
+    font-size: 32px;
+    color: #ef4444;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.error-loading-email p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .error-loading-email {
+        padding: 25px;
+    }
+    .error-loading-email i {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+    .error-loading-email p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-loading-email {
+        padding: 20px;
+    }
+    .error-loading-email i {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .error-loading-email p {
+        font-size: 12px;
+    }
+}
+            </style>
+            <div class="compose-footer">
+                <div class="compose-actions-left">
+                    <button class="btn btn-outline" id="saveDraftBtn">
+                        <i class="fas fa-save"></i>
+                        Salvar Rascunho
+                    </button>
+                </div>
+                <button class="send-btn" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    Enviar Email
+                </button>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    // Estado da aplicação
+    let currentFolder = 'INBOX';
+    let selectedFiles = [];
+    let currentEmail = null;
+    let userEmail = '';
+    const API_BASE = 'http://localhost:3000/api';
+
+    // Elementos DOM
+    const elements = {
+        loginContainer: document.getElementById('loginContainer'),
+        appContainer: document.getElementById('appContainer'),
+        loginForm: document.getElementById('loginForm'),
+        errorMessage: document.getElementById('errorMessage'),
+        userAvatar: document.getElementById('userAvatar'),
+        logoutBtn: document.getElementById('logoutBtn'),
+        composeBtn: document.getElementById('composeBtn'),
+        composeModal: document.getElementById('composeModal'),
+        closeCompose: document.getElementById('closeCompose'),
+        minimizeCompose: document.getElementById('minimizeCompose'),
+        sendBtn: document.getElementById('sendBtn'),
+        saveDraftBtn: document.getElementById('saveDraftBtn'),
+        emailListContainer: document.getElementById('emailListContainer'),
+        emailListView: document.getElementById('emailListView'),
+        emailDetailView: document.getElementById('emailDetailView'),
+        refreshBtn: document.getElementById('refreshBtn'),
+        backBtn: document.getElementById('backBtn'),
+        folderTitle: document.getElementById('folderTitle'),
+        emailCount: document.getElementById('emailCount'),
+        replyBtn: document.getElementById('replyBtn'),
+        forwardBtn: document.getElementById('forwardBtn'),
+        deleteBtn: document.getElementById('deleteBtn'),
+        starBtn: document.getElementById('starBtn'),
+        searchInput: document.getElementById('searchInput'),
+        emailDetailSubject: document.getElementById('emailDetailSubject'),
+        emailDetailFrom: document.getElementById('emailDetailFrom'),
+        emailDetailDate: document.getElementById('emailDetailDate'),
+        emailDetailBody: document.getElementById('emailDetailBody'),
+        fileUpload: document.getElementById('fileUpload'),
+        fileInput: document.getElementById('fileInput'),
+        attachmentsList: document.getElementById('attachmentsList'),
+        composeTo: document.getElementById('composeTo'),
+        composeSubject: document.getElementById('composeSubject'),
+        composeMessage: document.getElementById('composeMessage'),
+        emailAttachmentsSection: document.getElementById('emailAttachmentsSection'),
+        emailAttachmentsList: document.getElementById('emailAttachmentsList'),
+        filesFolderBtn: document.getElementById('filesFolderBtn'),
+        filesView: document.getElementById('filesView'),
+        filesGrid: document.getElementById('filesGrid'),
+        totalFiles: document.getElementById('totalFiles'),
+        totalSize: document.getElementById('totalSize'),
+        refreshFilesBtn: document.getElementById('refreshFilesBtn')
+    };
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function() {
+        checkSession();
+        setupEventListeners();
+    });
+
+    // Funções principais
+    function setupEventListeners() {
+        // Login
+        elements.loginForm.addEventListener('submit', handleLogin);
+        elements.logoutBtn.addEventListener('click', handleLogout);
+        
+        // Navegação
+        elements.composeBtn.addEventListener('click', showComposeModal);
+        elements.closeCompose.addEventListener('click', closeComposeModal);
+        elements.minimizeCompose.addEventListener('click', () => elements.composeModal.style.display = 'none');
+        elements.refreshBtn.addEventListener('click', refreshEmails);
+        elements.backBtn.addEventListener('click', backToList);
+        
+        // Pastas
+        document.querySelectorAll('.folder-item').forEach(item => {
+            item.addEventListener('click', function() {
+                switchFolder(this.dataset.folder);
+            });
+        });
+        
+        // Ações de email
+        elements.sendBtn.addEventListener('click', sendEmail);
+        elements.saveDraftBtn.addEventListener('click', saveDraft);
+        elements.replyBtn.addEventListener('click', replyEmail);
+        elements.forwardBtn.addEventListener('click', forwardEmail);
+        elements.deleteBtn.addEventListener('click', deleteEmail);
+        elements.starBtn.addEventListener('click', toggleStar);
+        
+        // Upload de arquivos
+        elements.fileUpload.addEventListener('click', () => elements.fileInput.click());
+        elements.fileInput.addEventListener('change', handleFileSelect);
+        
+        // Busca
+        elements.searchInput.addEventListener('input', debounce(searchEmails, 500));
+        
+        // Arquivos
+        elements.refreshFilesBtn.addEventListener('click', loadUserFiles);
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+        
+        if (!email || !password) {
+            showError('Preencha email e senha');
+            return;
+        }
+
+        const loginBtn = document.getElementById('loginBtn');
+        const loading = document.getElementById('loading');
+        
+        loginBtn.disabled = true;
+        loading.style.display = 'block';
+        elements.errorMessage.style.display = 'none';
+
+        try {
+            const response = await fetch(`${API_BASE}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, rememberMe })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                userEmail = email;
+                elements.userAvatar.textContent = email.charAt(0).toUpperCase();
+                startSession();
+                loadStats();
+                loadEmails();
+                showNotification('Login realizado com sucesso!', 'success');
+            } else {
+                showError(data.error || 'Erro ao fazer login');
+            }
+        } catch (error) {
+            console.error('Erro de conexão:', error);
+            showError('Erro de conexão com o servidor');
+        } finally {
+            loginBtn.disabled = false;
+            loading.style.display = 'none';
+        }
+    }
+
+    async function checkSession() {
+        try {
+            const response = await fetch(`${API_BASE}/session`);
+            if (!response.ok) return;
+            const data = await response.json();
+
+            if (data.authenticated) {
+                userEmail = data.user;
+                elements.userAvatar.textContent = data.user.charAt(0).toUpperCase();
+                startSession();
+                loadStats();
+                loadEmails();
+            }
+        } catch (error) {
+            console.log('Sem sessão ativa');
+        }
+    }
+
+    function startSession() {
+        elements.loginContainer.style.display = 'none';
+        elements.appContainer.style.display = 'block';
+    }
+
+    async function handleLogout() {
+        try {
+            await fetch(`${API_BASE}/logout`, { method: 'POST' });
+        } catch (error) {
+            console.error('Erro ao fazer logout:', error);
+        } finally {
+            elements.appContainer.style.display = 'none';
+            elements.loginContainer.style.display = 'flex';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            userEmail = '';
+            selectedFiles = [];
+            currentEmail = null;
+        }
+    }
+
+    async function loadStats() {
+        try {
+            const response = await fetch(`${API_BASE}/stats`);
+            if (!response.ok) throw new Error('Erro ao carregar estatísticas');
+            const data = await response.json();
+            
+            document.getElementById('inboxCount').textContent = data.inbox || 0;
+            document.getElementById('sentCount').textContent = data.sent || 0;
+            document.getElementById('trashCount').textContent = data.trash || 0;
+            
+            document.getElementById('inboxBadge').textContent = data.inbox || 0;
+            document.getElementById('sentBadge').textContent = data.sent || 0;
+            document.getElementById('trashBadge').textContent = data.trash || 0;
+            document.getElementById('starredBadge').textContent = data.starred || 0;
+            document.getElementById('draftsBadge').textContent = data.drafts || 0;
+            
+        } catch (error) {
+            console.error('Erro ao carregar estatísticas:', error);
+        }
+    }
+
+    async function loadEmails(search = '') {
+        try {
+            let response;
+            if (currentFolder === 'Starred') {
+                response = await fetch(`${API_BASE}/starred-emails`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ limit: 50 })
+                });
+            } else {
+                response = await fetch(`${API_BASE}/emails`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ folder: currentFolder, limit: 50, search })
+                });
+            }
+
+            const data = await response.json();
+
+            if (response.ok) {
+                displayEmails(data.emails || []);
+                elements.emailCount.textContent = `${data.total || 0} emails`;
+                
+                const folderNames = {
+                    'INBOX': 'Caixa de Entrada',
+                    'Sent': 'Enviados',
+                    'Drafts': 'Rascunhos',
+                    'Trash': 'Lixeira',
+                    'Starred': 'Importantes'
+                };
+                elements.folderTitle.textContent = folderNames[currentFolder] || currentFolder;
+                
+            } else {
+                showNotification(data.error || 'Erro ao carregar emails', 'error');
+                displayEmails([]);
+            }
+        } catch (error) {
+            console.error('Erro ao carregar emails:', error);
+            showNotification('Erro ao carregar emails', 'error');
+            displayEmails([]);
+        }
+    }
+
+    function displayEmails(emails) {
+        elements.emailListContainer.innerHTML = '';
+
+        if (!emails || emails.length === 0) {
+            elements.emailListContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <h3>Nenhum email encontrado</h3>
+                    <p>Não há mensagens nesta pasta</p>
+                </div>
+            `;
+            return;
+        }
+
+        emails.forEach(email => {
+            const emailItem = document.createElement('div');
+            emailItem.className = `email-item ${email.read ? '' : 'unread'}`;
+            emailItem.dataset.seqno = email.id;
+            emailItem.dataset.folder = currentFolder;
+            
+            const date = formatEmailDate(email.date);
+            const isStarred = email.flags && email.flags.includes('\\Flagged');
+            
+            emailItem.innerHTML = `
+                <div class="email-star ${isStarred ? 'starred' : ''}">
+                    <i class="${isStarred ? 'fas' : 'far'} fa-star"></i>
+                </div>
+                <div class="email-sender">${escapeHtml(email.from || 'Desconhecido')}</div>
+                <div class="email-content">
+                    <div class="email-subject">
+                        ${escapeHtml(email.subject || '(Sem assunto)')}
+                        ${email.hasAttachments ? '<i class="fas fa-paperclip email-attachment"></i>' : ''}
+                    </div>
+                    <div class="email-preview">${escapeHtml(email.preview || 'Visualizar conteúdo...')}</div>
+                </div>
+                <div class="email-date">${date}</div>
+            `;
+            
+            emailItem.querySelector('.email-star').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleStarAction(email.id, currentFolder, isStarred);
+            });
+            
+            emailItem.addEventListener('click', (e) => {
+                if (e.target.classList.contains('fa-star')) return;
+                viewEmail(email.id, currentFolder);
+            });
+            
+            elements.emailListContainer.appendChild(emailItem);
+        });
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Visualizar email
+    async function viewEmail(seqno, folder) {
+        console.log(`📨 Visualizando email ${seqno} da pasta ${folder}`);
+        
+        elements.emailDetailBody.innerHTML = `
+    <div class="loading-email">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Carregando email...</p>
+    </div>
+`;
+        try {
+            const response = await fetch(`${API_BASE}/email-complete`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ folder, seqno })
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao carregar email');
+            }
+
+            const data = await response.json();
+
+            if (data.email) {
+                currentEmail = data.email;
+                displayEmail(data.email);
+                elements.emailListView.style.display = 'none';
+                elements.emailDetailView.style.display = 'flex';
+                elements.backBtn.style.display = 'flex';
+                
+                const isStarred = currentEmail.flags && currentEmail.flags.includes('\\Flagged');
+                elements.starBtn.querySelector('i').className = isStarred ? 'fas fa-star' : 'far fa-star';
+                elements.starBtn.innerHTML = `<i class="${isStarred ? 'fas' : 'far'} fa-star"></i> ${isStarred ? 'Desmarcar' : 'Marcar como'} Importante`;
+                
+                if (folder === 'Trash') {
+                    elements.deleteBtn.innerHTML = '<i class="fas fa-skull-crossbones"></i> Excluir Permanentemente';
+                } else {
+                    elements.deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Mover para Lixeira';
+                }
+                
+                showNotification('Email carregado com sucesso', 'success');
+            } else {
+                throw new Error('Email não encontrado');
+            }
+        } catch (error) {
+            console.error('❌ Erro ao carregar email:', error);
+            showNotification('Erro ao carregar email', 'error');
+            elements.emailDetailBody.innerHTML = `
+    <div class="error-loading-email">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>Erro ao carregar email</p>
+    </div>
+`;        }
+    }
+
+    function displayEmail(email) {
+        console.log('📝 Exibindo email:', email);
+        
+        elements.emailDetailSubject.textContent = email.subject || '(Sem assunto)';
+        elements.emailDetailFrom.textContent = email.from || 'Desconhecido';
+        elements.emailDetailDate.textContent = formatEmailDate(email.date);
+
+        let contentToDisplay = '';
+
+        if (email.html && email.html.trim()) {
+            contentToDisplay = email.html
+                .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+                .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+                .replace(/on\w+="[^"]*"/g, '')
+                .replace(/on\w+='[^']*'/g, '');
+        } else if (email.text && email.text.trim()) {
+            contentToDisplay = '<pre style="white-space: pre-wrap; word-wrap: break-word; font-family: Inter, sans-serif; margin: 0; padding: 20px; background: #f8fafc; border-radius: 8px; line-height: 1.6;">' + 
+                escapeHtml(email.text) + '</pre>';
+        } else if (email.body && email.body.trim() && email.body !== 'Nenhum conteúdo disponível') {
+            contentToDisplay = '<pre style="white-space: pre-wrap; word-wrap: break-word; font-family: Inter, sans-serif; margin: 0; padding: 20px; background: #f8fafc; border-radius: 8px; line-height: 1.6;">' + 
+                escapeHtml(email.body) + '</pre>';
+        } else {
+            contentToDisplay = '<div style="text-align: center; padding: 60px; color: #64748b;">' +
+                '<i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>' +
+                '<h3 style="margin-bottom: 10px;">Nenhum conteúdo disponível</h3>' +
+                '<p>Este email não possui conteúdo legível.</p>' +
+                '</div>';
+        }
+
+        elements.emailDetailBody.innerHTML = contentToDisplay;
+
+        // ✅ EXIBIR ANEXOS SALVOS
+        displayEmailAttachments(email.attachments || []);
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Exibir anexos recebidos
+    function displayEmailAttachments(attachments) {
+        console.log('📎 Processando anexos salvos:', attachments);
+        
+        elements.emailAttachmentsSection.style.display = 'none';
+        elements.emailAttachmentsList.innerHTML = '';
+        
+        if (!attachments || attachments.length === 0) {
+            console.log('ℹ️  Nenhum anexo para exibir');
+            return;
+        }
+
+        console.log(`✅ Exibindo ${attachments.length} anexos`);
+        
+        attachments.forEach((attachment, index) => {
+            const attachmentItem = document.createElement('div');
+            attachmentItem.className = 'email-attachment-item';
+            
+            let fileIcon = 'fa-file';
+            let fileName = attachment.originalName || attachment.filename || `anexo-${index + 1}`;
+            let fileType = attachment.contentType || '';
+            
+            if (fileName.toLowerCase().includes('.pdf') || fileType.includes('pdf')) {
+                fileIcon = 'fa-file-pdf';
+            } else if (fileName.toLowerCase().match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/) || fileType.includes('image')) {
+                fileIcon = 'fa-file-image';
+            } else if (fileName.toLowerCase().match(/\.(doc|docx)$/) || fileType.includes('word')) {
+                fileIcon = 'fa-file-word';
+            } else if (fileName.toLowerCase().match(/\.(xls|xlsx)$/) || fileType.includes('excel')) {
+                fileIcon = 'fa-file-excel';
+            } else if (fileName.toLowerCase().match(/\.(zip|rar|7z|tar|gz)$/) || fileType.includes('zip')) {
+                fileIcon = 'fa-file-archive';
+            } else if (fileName.toLowerCase().match(/\.(txt)$/) || fileType.includes('text')) {
+                fileIcon = 'fa-file-alt';
+            }
+            
+            attachmentItem.innerHTML = `
+                <div class="email-attachment-icon">
+                    <i class="fas ${fileIcon}"></i>
+                </div>
+                <div class="email-attachment-info">
+                    <div class="email-attachment-name">${escapeHtml(fileName)}</div>
+                    <div class="email-attachment-size">${attachment.size ? formatFileSize(attachment.size) : 'Tamanho desconhecido'}</div>
+                    <div class="email-attachment-type">${fileType}</div>
+                </div>
+                <button class="email-attachment-download" data-filename="${attachment.savedPath || fileName}">
+                    <i class="fas fa-download"></i>
+                    Baixar
+                </button>
+            `;
+            
+            // ✅ DOWNLOAD DIRETO DO ARQUIVO SALVO
+            const downloadBtn = attachmentItem.querySelector('.email-attachment-download');
+            downloadBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const savedFilename = attachment.savedPath || fileName;
+                downloadSavedAttachment(savedFilename, fileName);
+            });
+            
+            elements.emailAttachmentsList.appendChild(attachmentItem);
+        });
+        
+        elements.emailAttachmentsSection.style.display = 'block';
+        console.log(`✅ Seção de anexos exibida com ${attachments.length} arquivos`);
+    }
+
+    // ✅ FUNÇÃO: Baixar anexo salvo no servidor
+    function downloadSavedAttachment(savedFilename, originalFilename) {
+        console.log(`📥 Baixando anexo salvo: ${originalFilename}`);
+        
+        showNotification(`Baixando ${originalFilename}...`, 'info');
+        
+        const downloadUrl = `${API_BASE}/download-saved-attachment/${encodeURIComponent(savedFilename)}`;
+        
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = originalFilename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        setTimeout(() => {
+            showNotification(`✅ ${originalFilename} baixado!`, 'success');
+        }, 500);
+    }
+
+    // ✅ FUNÇÃO: Carregar arquivos do usuário
+    async function loadUserFiles() {
+        console.log('📁 Carregando arquivos do usuário...');
+        
+        try {
+            const response = await fetch(`${API_BASE}/user-files`);
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                displayUserFiles(data.files || []);
+                elements.totalFiles.textContent = `${data.total || 0} arquivos`;
+                elements.totalSize.textContent = formatFileSize(data.structure?.totalSize || 0);
+                document.getElementById('filesBadge').textContent = data.total || 0;
+            } else {
+                showNotification('Erro ao carregar arquivos', 'error');
+                displayUserFiles([]);
+            }
+        } catch (error) {
+            console.error('❌ Erro ao carregar arquivos:', error);
+            showNotification('Erro ao carregar arquivos', 'error');
+            displayUserFiles([]);
+        }
+    }
+
+    // ✅ FUNÇÃO: Exibir arquivos do usuário
+    function displayUserFiles(files) {
+        elements.filesGrid.innerHTML = '';
+
+        if (!files || files.length === 0) {
+            elements.filesGrid.innerHTML = `
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>Nenhum arquivo encontrado</h3>
+                    <p>Seus anexos de email aparecerão aqui automaticamente</p>
+                </div>
+            `;
+            return;
+        }
+
+        files.forEach(file => {
+            const fileCard = document.createElement('div');
+            fileCard.className = 'file-card';
+            
+            let fileIcon = 'fa-file';
+            if (file.name.toLowerCase().includes('.pdf')) {
+                fileIcon = 'fa-file-pdf';
+            } else if (file.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/)) {
+                fileIcon = 'fa-file-image';
+            } else if (file.name.toLowerCase().match(/\.(doc|docx)$/)) {
+                fileIcon = 'fa-file-word';
+            } else if (file.name.toLowerCase().match(/\.(xls|xlsx)$/)) {
+                fileIcon = 'fa-file-excel';
+            } else if (file.name.toLowerCase().match(/\.(zip|rar|7z|tar|gz)$/)) {
+                fileIcon = 'fa-file-archive';
+            } else if (file.name.toLowerCase().match(/\.(txt)$/)) {
+                fileIcon = 'fa-file-alt';
+            }
+            
+            fileCard.innerHTML = `
+                <div class="file-icon">
+                    <i class="fas ${fileIcon}"></i>
+                </div>
+                <div class="file-name" title="${escapeHtml(file.name)}">
+                    ${escapeHtml(file.name)}
+                </div>
+                <div class="file-info">
+                    <div>Tamanho: ${formatFileSize(file.size)}</div>
+                    <div>Modificado: ${formatFileDate(file.modified)}</div>
+                    <div>Categoria: ${file.category}</div>
+                </div>
+                <div class="file-actions">
+                    <button class="file-action-btn download-file" data-path="${file.path}">
+                        <i class="fas fa-download"></i>
+                        Baixar
+                    </button>
+                    <button class="file-action-btn delete delete-file" data-path="${file.path}" data-name="${file.name}">
+                        <i class="fas fa-trash"></i>
+                        Excluir
+                    </button>
+                </div>
+            `;
+            
+            const downloadBtn = fileCard.querySelector('.download-file');
+            const deleteBtn = fileCard.querySelector('.delete-file');
+            
+            downloadBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                downloadSavedAttachment(file.path, file.name);
+            });
+            
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteUserFile(file.path, file.name);
+            });
+            
+            elements.filesGrid.appendChild(fileCard);
+        });
+    }
+
+    // ✅ FUNÇÃO: Excluir arquivo do usuário
+    async function deleteUserFile(filePath, fileName) {
+        if (!confirm(`Tem certeza que deseja excluir "${fileName}"?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/user-files/${encodeURIComponent(filePath)}`, {
+                method: 'DELETE'
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showNotification('Arquivo excluído com sucesso', 'success');
+                loadUserFiles();
+            } else {
+                showNotification(data.error || 'Erro ao excluir arquivo', 'error');
+            }
+        } catch (error) {
+            console.error('❌ Erro ao excluir arquivo:', error);
+            showNotification('Erro ao excluir arquivo', 'error');
+        }
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Alternar para view de arquivos
+    function switchFolder(folder) {
+        currentFolder = folder;
+        document.querySelectorAll('.folder-item').forEach(item => item.classList.remove('active'));
+        event.target.closest('.folder-item').classList.add('active');
+        
+        if (folder === 'Files') {
+            elements.emailListView.style.display = 'none';
+            elements.emailDetailView.style.display = 'none';
+            elements.filesView.style.display = 'block';
+            elements.backBtn.style.display = 'none';
+            loadUserFiles();
+        } else {
+            elements.filesView.style.display = 'none';
+            elements.emailDetailView.style.display = 'none';
+            elements.emailListView.style.display = 'flex';
+            elements.backBtn.style.display = 'none';
+            loadEmails();
+        }
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Enviar email
+    async function sendEmail() {
+        const to = elements.composeTo.value.trim();
+        const subject = elements.composeSubject.value.trim();
+        const message = elements.composeMessage.value.trim();
+
+        if (!to || !subject || !message) {
+            showNotification('Preencha todos os campos obrigatórios', 'warning');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(to)) {
+            showNotification('Email do destinatário inválido', 'warning');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('to', to);
+        formData.append('subject', subject);
+        formData.append('text', message);
+        
+        selectedFiles.forEach(file => {
+            formData.append('attachments', file);
+        });
+
+        elements.sendBtn.disabled = true;
+        elements.sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        try {
+            // ✅ USAR A ROTA CORRETA: /api/send
+            const response = await fetch(`${API_BASE}/send`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showNotification('Email enviado com sucesso!', 'success');
+                closeComposeModal();
+                loadStats();
+                if (currentFolder === 'Sent') {
+                    loadEmails();
+                }
+            } else {
+                showNotification('Erro: ' + (data.error || 'Erro desconhecido'), 'error');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar:', error);
+            showNotification('Erro de conexão ao enviar email', 'error');
+        } finally {
+            elements.sendBtn.disabled = false;
+            elements.sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Email';
+        }
+    }
+
+    function handleFileSelect(e) {
+        const files = Array.from(e.target.files);
+        
+        const validTypes = [
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'text/plain',
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+            'image/gif',
+            'application/zip',
+            'application/x-rar-compressed'
+        ];
+
+        const validFiles = files.filter(file => {
+            if (validTypes.includes(file.type)) {
+                return true;
+            } else {
+                showNotification(`Tipo de arquivo não suportado: ${file.name}`, 'warning');
+                return false;
+            }
+        });
+
+        selectedFiles = [...selectedFiles, ...validFiles].slice(0, 10);
+        updateAttachmentsList();
+        e.target.value = '';
+    }
+
+    function updateAttachmentsList() {
+        elements.attachmentsList.innerHTML = '';
+        
+        selectedFiles.forEach((file, index) => {
+            const attachment = document.createElement('div');
+            attachment.className = 'attachment-item';
+            attachment.innerHTML = `
+                <i class="fas fa-file"></i>
+                ${escapeHtml(file.name)}
+                <i class="fas fa-times" onclick="removeAttachment(${index})"></i>
+            `;
+            elements.attachmentsList.appendChild(attachment);
+        });
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Marcar/desmarcar como importante
+    async function toggleStarAction(seqno, folder, isStarred) {
+        try {
+            const response = await fetch(`${API_BASE}/toggle-star`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ folder, seqno, starred: !isStarred })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showNotification(isStarred ? 'Email desmarcado' : 'Email marcado como importante', 'success');
+                loadEmails();
+                loadStats();
+            } else {
+                showNotification(data.error || 'Erro ao marcar/desmarcar email', 'error');
+            }
+        } catch (error) {
+            console.error('Erro ao marcar estrela:', error);
+            showNotification('Erro de conexão', 'error');
+        }
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Salvar rascunho
+    async function saveDraft() {
+        const to = elements.composeTo.value.trim();
+        const subject = elements.composeSubject.value.trim();
+        const message = elements.composeMessage.value.trim();
+
+        if (!to && !subject && !message) {
+            showNotification('Nada para salvar como rascunho', 'warning');
+            return;
+        }
+
+        elements.saveDraftBtn.disabled = true;
+        elements.saveDraftBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+
+        try {
+            const response = await fetch(`${API_BASE}/save-draft`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ to, subject, text: message })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showNotification('Rascunho salvo com sucesso!', 'success');
+                closeComposeModal();
+                loadStats();
+            } else {
+                showNotification(data.error || 'Erro ao salvar rascunho', 'error');
+            }
+        } catch (error) {
+            console.error('Erro ao salvar rascunho:', error);
+            showNotification('Erro de conexão', 'error');
+        } finally {
+            elements.saveDraftBtn.disabled = false;
+            elements.saveDraftBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Rascunho';
+        }
+    }
+
+    function replyEmail() {
+        if (!currentEmail) return;
+        
+        showComposeModal();
+        elements.composeTo.value = currentEmail.from || '';
+        elements.composeSubject.value = `Re: ${currentEmail.subject || ''}`;
+        
+        const originalText = currentEmail.text || currentEmail.body || '';
+        const replyText = `\n\n---\nEm ${new Date().toLocaleString('pt-BR')}, ${currentEmail.from} escreveu:\n${originalText}`;
+        elements.composeMessage.value = replyText;
+    }
+
+    function forwardEmail() {
+        if (!currentEmail) return;
+        
+        showComposeModal();
+        elements.composeTo.value = '';
+        elements.composeSubject.value = `Fwd: ${currentEmail.subject || ''}`;
+        
+        const originalText = currentEmail.text || currentEmail.body || '';
+        const forwardText = `\n\n---\nDe: ${currentEmail.from}\nData: ${formatEmailDate(currentEmail.date)}\nAssunto: ${currentEmail.subject}\n\n${originalText}`;
+        elements.composeMessage.value = forwardText;
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Excluir email
+    async function deleteEmail() {
+        if (!currentEmail) return;
+        
+        if (currentFolder === 'Trash') {
+            if (!confirm('ATENÇÃO: Esta ação não pode ser desfeita!')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/delete-permanently`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ seqno: currentEmail.id })
+                });
+
+                if (response.ok) {
+                    showNotification('Email excluído permanentemente', 'success');
+                    backToList();
+                    loadEmails();
+                    loadStats();
+                }
+            } catch (error) {
+                showNotification('Erro ao excluir email', 'error');
+            }
+        } else {
+            if (!confirm('Mover email para lixeira?')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/move-to-trash`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ folder: currentFolder, seqno: currentEmail.id })
+                });
+
+                if (response.ok) {
+                    showNotification('Email movido para lixeira', 'success');
+                    backToList();
+                    loadEmails();
+                    loadStats();
+                }
+            } catch (error) {
+                showNotification('Erro ao mover email', 'error');
+            }
+        }
+    }
+
+    function toggleStar() {
+        if (!currentEmail) return;
+        const isStarred = currentEmail.flags && currentEmail.flags.includes('\\Flagged');
+        toggleStarAction(currentEmail.id, currentFolder, isStarred);
+    }
+
+    function showComposeModal() {
+        elements.composeModal.style.display = 'flex';
+        elements.composeTo.value = '';
+        elements.composeSubject.value = '';
+        elements.composeMessage.value = '';
+        selectedFiles = [];
+        updateAttachmentsList();
+    }
+
+    function closeComposeModal() {
+        elements.composeModal.style.display = 'none';
+        elements.composeTo.value = '';
+        elements.composeSubject.value = '';
+        elements.composeMessage.value = '';
+        selectedFiles = [];
+        updateAttachmentsList();
+    }
+
+    function backToList() {
+        elements.emailDetailView.style.display = 'none';
+        elements.emailListView.style.display = 'flex';
+        elements.backBtn.style.display = 'none';
+        currentEmail = null;
+    }
+
+    function refreshEmails() {
+        loadEmails();
+        loadStats();
+        showNotification('Emails atualizados', 'success');
+    }
+
+    function searchEmails() {
+        const searchTerm = elements.searchInput.value.trim();
+        loadEmails(searchTerm);
+    }
+
+    function formatEmailDate(dateString) {
+        if (!dateString) return 'Data não disponível';
+        
+        try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return 'Data inválida';
+            
+            return date.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        } catch (e) {
+            return 'Data não disponível';
+        }
+    }
+
+    function formatFileDate(dateString) {
+        if (!dateString) return 'Data não disponível';
+        
+        try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return 'Data inválida';
+            
+            return date.toLocaleDateString('pt-BR');
+        } catch (e) {
+            return 'Data não disponível';
+        }
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    function showNotification(message, type = 'success') {
+        document.querySelectorAll('.notification').forEach(notification => notification.remove());
+        
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'exclamation-triangle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}"></i>
+            ${message}
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 4000);
+    }
+
+    function showError(message) {
+        elements.errorMessage.textContent = message;
+        elements.errorMessage.style.display = 'block';
+        setTimeout(() => {
+            elements.errorMessage.style.display = 'none';
+        }, 5000);
+    }
+
+    window.removeAttachment = function(index) {
+        selectedFiles.splice(index, 1);
+        updateAttachmentsList();
+    };
+</script>
+<!-- Adicione este script no final do arquivo index.html, antes do </body> -->
+
+<script>
+    // ✅ FUNÇÃO CORRIGIDA: Excluir email - VERSÃO MELHORADA
+    async function deleteEmail() {
+        if (!currentEmail) return;
+        
+        if (currentFolder === 'Trash') {
+            if (!confirm('ATENÇÃO: Esta ação não pode ser desfeita! O email será excluído permanentemente.')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/delete-permanently`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ seqno: currentEmail.id })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('Email excluído permanentemente', 'success');
+                    backToList();
+                    loadEmails();
+                    loadStats();
+                } else {
+                    showNotification(data.error || 'Erro ao excluir email', 'error');
+                }
+            } catch (error) {
+                console.error('❌ Erro ao excluir email:', error);
+                showNotification('Erro ao excluir email', 'error');
+            }
+        } else {
+            if (!confirm('Mover email para lixeira? Você poderá recuperá-lo depois.')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/move-to-trash`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        folder: currentFolder, 
+                        seqno: currentEmail.id 
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification('Email movido para lixeira', 'success');
+                    backToList();
+                    loadEmails();
+                    loadStats();
+                } else {
+                    showNotification(data.error || 'Erro ao mover email', 'error');
+                }
+            } catch (error) {
+                console.error('❌ Erro ao mover email:', error);
+                showNotification('Erro ao mover email para lixeira', 'error');
+            }
+        }
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Enviar email - ATUALIZAR ENVIADOS
+    async function sendEmail() {
+        const to = elements.composeTo.value.trim();
+        const subject = elements.composeSubject.value.trim();
+        const message = elements.composeMessage.value.trim();
+
+        if (!to || !subject || !message) {
+            showNotification('Preencha todos os campos obrigatórios', 'warning');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(to)) {
+            showNotification('Email do destinatário inválido', 'warning');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('to', to);
+        formData.append('subject', subject);
+        formData.append('text', message);
+        
+        selectedFiles.forEach(file => {
+            formData.append('attachments', file);
+        });
+
+        elements.sendBtn.disabled = true;
+        elements.sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        try {
+            const response = await fetch(`${API_BASE}/send`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showNotification('Email enviado com sucesso!', 'success');
+                closeComposeModal();
+                loadStats();
+                
+                // ✅ ATUALIZAR A PASTA DE ENVIADOS SE ESTIVER VISÍVEL
+                if (currentFolder === 'Sent') {
+                    loadEmails();
+                }
+                
+                // ✅ MOSTRAR MENSAGEM INFORMATIVA
+                showNotification('Email salvo na pasta "Enviados"', 'info');
+                
+            } else {
+                showNotification('Erro: ' + (data.error || 'Erro desconhecido'), 'error');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar:', error);
+            showNotification('Erro de conexão ao enviar email', 'error');
+        } finally {
+            elements.sendBtn.disabled = false;
+            elements.sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Email';
+        }
+    }
+
+    // ✅ FUNÇÃO CORRIGIDA: Visualizar email - DETECTAR SE É LIXEIRA
+    async function viewEmail(seqno, folder) {
+        console.log(`📨 Visualizando email ${seqno} da pasta ${folder}`);
+        
+        elements.emailDetailBody.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size: 32px; color: #6366f1;"></i><p style="margin-top: 15px;">Carregando email...</p></div>';
+        
+        try {
+            const response = await fetch(`${API_BASE}/email-complete`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ folder, seqno })
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao carregar email');
+            }
+
+            const data = await response.json();
+
+            if (data.email) {
+                currentEmail = data.email;
+                displayEmail(data.email);
+                elements.emailListView.style.display = 'none';
+                elements.emailDetailView.style.display = 'flex';
+                elements.backBtn.style.display = 'flex';
+                
+                const isStarred = currentEmail.flags && currentEmail.flags.includes('\\Flagged');
+                elements.starBtn.querySelector('i').className = isStarred ? 'fas fa-star' : 'far fa-star';
+                elements.starBtn.innerHTML = `<i class="${isStarred ? 'fas' : 'far'} fa-star"></i> ${isStarred ? 'Desmarcar' : 'Marcar como'} Importante`;
+                
+                // ✅ CORREÇÃO: DETECTAR SE ESTÁ NA LIXEIRA E AJUSTAR BOTÃO
+                if (folder === 'Trash') {
+                    elements.deleteBtn.innerHTML = '<i class="fas fa-skull-crossbones"></i> Excluir Permanentemente';
+                    elements.deleteBtn.style.background = '#ef4444';
+                    elements.deleteBtn.style.color = 'white';
+                    elements.deleteBtn.style.borderColor = '#ef4444';
+                } else {
+                    elements.deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Mover para Lixeira';
+                    elements.deleteBtn.style.background = '';
+                    elements.deleteBtn.style.color = '';
+                    elements.deleteBtn.style.borderColor = '';
+                }
+                
+                showNotification('Email carregado com sucesso', 'success');
+            } else {
+                throw new Error('Email não encontrado');
+            }
+        } catch (error) {
+            console.error('❌ Erro ao carregar email:', error);
+            showNotification('Erro ao carregar email', 'error');
+            elements.emailDetailBody.innerHTML = '<div style="text-align: center; padding: 40px; color: #ef4444;"><i class="fas fa-exclamation-triangle" style="font-size: 32px;"></i><p style="margin-top: 15px;">Erro ao carregar email</p></div>';
+        }
+    }
+</script>
+</body>
+</html>
